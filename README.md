@@ -1,3 +1,5 @@
 # snakegame_clone
 # 21년 3월 6일부터 시작. 첫 토이 프로젝트
-# https://zetcode.com/javagames/snake/ 보고 클론 코딩
+# https://zetcode.com/javagames/snake/ 보고 클론 코딩, 1줄 코딩 1줄 주석
+# 3월 8일 클론 코딩 및 테스트 완료. 앞으로 새 기능 추가 예정
+# 추가 예정 기능 1. 뱀의 몸, 머리가 있는 위치에 사과 생성불가, 2. 게임 재시작
