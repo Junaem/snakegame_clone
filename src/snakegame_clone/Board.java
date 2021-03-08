@@ -1,5 +1,6 @@
 package snakegame_clone;
-
+//주석은 그냥 코드만 보고 따라치면서 느낀것들, 궁금점.
+//주석 앞에 @@가 달려있으면 위에 대한 해답.
 import java.awt.Color;
 import java.awt.Dimension;//차원?왜?
 import java.awt.Font;
@@ -20,11 +21,11 @@ public class Board extends JPanel implements ActionListener {
 	private final int B_WIDTH = 300;
 	private final int B_HEIGHT = 300;
 	private final int DOT_SIZE = 10;
-	private final int ALL_DOTS = 900;//30*30해서 900인건 알겠는데 이 숫자 바꾸면 에러나나?
-	private final int RAND_POS = 29;//rand pos 둘중 하나도, 29의 의미도 모르겠음
-	private final int DELAY = 140;//게임 속도의 딜레인가?
+	private final int ALL_DOTS = 900;//30*30해서 900인건 알겠는데 이 숫자 바꾸면 에러나나?@@@확인결과 
+	private final int RAND_POS = 29;//rand pos 둘중 하나도, 29의 의미도 모르겠음@@이건 나중에 코드치다가 깨달음
+	private final int DELAY = 140;//게임 속도의 딜레인가?@@딜레이, 즉 게임속도 조절이 맞았음
 	
-	private final int x[] = new int[ALL_DOTS];
+	private final int x[] = new int[ALL_DOTS];//@@뱀의 머리, 몸의 좌표들
 	private final int y[] = new int[ALL_DOTS];
 	
 	private int dots;
@@ -75,12 +76,13 @@ public class Board extends JPanel implements ActionListener {
 		for(int z=0; z<dots; z++) {//x,y는 all dots로 만든 int 수열이었음
 			x[z]=50 -z*10;
 			y[z]=50;
-		}//dots는 몸길이가 이닌것같고, x는 50~20, y는 50. 조금더 봐야할듯
+		}//dots는 몸길이가 이닌것같고, x는 50~20, y는 50. 조금더 봐야할듯@@@몸길이 맞음.for문은 몸 부분별로 다른 x좌표에 몸을 놔두는 것.
 		locateApple();//아직 구현x. 
 		timer = new Timer(DELAY, this);
 		//timer와 DELAY의 뜻은 딜레이(120)마다 한 틱이 지나간단 것으로 추정. 뒤의 this는 이 판이 120마다 움직인다는거인듯
 		timer.start();
 	}//이 함수는 게임시작전에 3,2,1 카운트하는 함수인듯. dots는 그냥 시작 신호를 점으로 보여주는거고.x랑 y는 각 점의 위치인듯?
+	//@@카운트가 아니고 그냥 뱀 생성. for문은 
 	
 	@Override
 	public void paintComponent(Graphics g) {
@@ -116,7 +118,7 @@ public class Board extends JPanel implements ActionListener {
 	
 	private void checkApple() {//이름은 체크애플이지만 실질적으로는 사과 먹었을때 실행되는 메서드.
 		if((x[0]==apple_x)&&(y[0]==apple_y)) {
-			dots++;
+			dots++;//몸 길어짐
 			locateApple();//곧 구현할듯. 랜덤변수 가져오는거 기대됨.
 		}
 	}//식을 이렇게 true만 적으면 false까지 하는것보다 실제처리속도가 빠른지 궁금.
@@ -148,7 +150,7 @@ public class Board extends JPanel implements ActionListener {
 			}
 		}
 		if(y[0]>=B_HEIGHT) {
-			inGame = false;//머리가 맵 높이(윗벽)을 넘으면 겜오버
+			inGame = false;//머리가 맵 높이(윗벽)을 넘으면 겜오버@@@알고보니 이게 아랫벽이었음. 즉 ↘요런 방향으로 숫자가 증가하며 그리는 거임. 함수의 4사분면 느낌.
 		}
 		if(y[0]<0) {
 			inGame = false;//아랫벽을 뜻하는 것 같음. 벽식이 4개인데 왜 안합치는지 이해불가.
@@ -168,6 +170,7 @@ public class Board extends JPanel implements ActionListener {
 		int r = (int)(Math.random()*RAND_POS);//RAND_POS는 29.random메서드는 0~1의 double을 랜덤하게 구현.즉 여기 *29하고 int로 변환
 		//29인 이유는 30은 벽이기때문, int로 변환했을때 0의 값이 나와도 위의 collision을 보면 0은 플레이가능. 즉 플레이가능범위는 0=<값=<29의 int. 총 30개.
 		apple_x =((r*DOT_SIZE));//그런데 실제로 dotsize가 10이니 거기에 10을 곱함. 즉 0~290까지의 10의 배수라고 봐야함. 근데 왜 1이 아니라 10을 쓰는건지, 이 숫자가 실제 우리가 보는 픽셀갯수인지 등이 궁금.
+		//@@@확인해보니 사이즈는 픽셀수가 맞았음.
 		r = (int)(Math.random()*RAND_POS);//위에서 r은 int형임을 선언했으므로 또 선언하면 에러가 남.(같은 변수이름으로 2개의 인스턴스라서?)
 		apple_y =((r*DOT_SIZE));
 	}
