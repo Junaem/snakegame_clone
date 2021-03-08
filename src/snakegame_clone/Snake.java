@@ -14,7 +14,7 @@ public class Snake extends JFrame {
 	private void initUI() {
 		add(new Board());
 		
-		setResizable(False);//크기 고정인가?
+		setResizable(false);//크기 고정인가?
 		pack();
 		
 		setTitle("snake");

@@ -171,4 +171,44 @@ public class Board extends JPanel implements ActionListener {
 		r = (int)(Math.random()*RAND_POS);//위에서 r은 int형임을 선언했으므로 또 선언하면 에러가 남.(같은 변수이름으로 2개의 인스턴스라서?)
 		apple_y =((r*DOT_SIZE));
 	}
+	
+	@Override//JPanel상속, ActionListener를 구현하고 있는데 어디에서 override하는건지 확인
+	public void actionPerformed(ActionEvent e) {//액션 인터페이스 구현인듯
+		if(inGame) {//게임중일때
+			
+			checkApple();//사과확인, 충돌확인, 무브. 즉 1틱이 지나가는 것.
+			checkCollision();
+			move();
+		}
+		repaint();//1틱이 지나갈때마다 repaint.repaint는 java.awt.Component에서 가져옴
+	}
+	
+	private class TAdapter extends KeyAdapter {
+		
+		@Override
+		public void keyPressed(KeyEvent e){
+			int key = e.getKeyCode();
+			
+			if((key==KeyEvent.VK_LEFT)&&(!rightDirection)) {
+				leftDirection = true;
+				upDirection = false;
+				downDirection = false;
+			}
+			if((key==KeyEvent.VK_RIGHT)&&(!leftDirection)) {
+				rightDirection = true;
+				upDirection = false;
+				downDirection = false;
+			}
+			if((key==KeyEvent.VK_UP)&&(!downDirection)) {
+				upDirection = true;
+				rightDirection = false;
+				leftDirection = false;
+			}
+			if((key==KeyEvent.VK_DOWN)&&(!upDirection)) {
+				downDirection = true;
+				rightDirection = false;
+				leftDirection = false;
+			}
+		}
+	}
 }
