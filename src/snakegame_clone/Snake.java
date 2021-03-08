@@ -6,16 +6,20 @@ https://velog.io/@ljs0429777/Move-Practice2
 import java.awt.EventQueue;//awt는 GUI 관련 기능이라고함
 import javax.swing.JFrame;//swing도 비슷한데 조금 더 많은 기능 지원하는듯
 
+import snakegame_clone.Board;
+
 public class Snake extends JFrame {
 	public Snake() {
 		initUI();
 	}
 	
+	
+	
 	private void initUI() {
 		add(new Board());
 		
 		setResizable(false);//크기 고정인가?@@@이걸 pack이전에 하지 않으면 오른쪽, 아랫쪽 벽에 충돌이 제대로 작동 안한다고 함.
-		pack();
+		pack();//@@@컨테이너의 크기를 구성요소들의 크기로 설정하는 거라고 함
 		
 		setTitle("snake");
 		setLocationRelativeTo(null);//위치를 null로 두는데 아직이해불가

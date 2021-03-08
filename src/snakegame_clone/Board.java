@@ -15,6 +15,8 @@ import java.awt.event.KeyEvent;//키로 이벤트를 일으키는건가? 입력�
 import javax.swing.ImageIcon;//그냥 이미지파일 불러오긴가
 import javax.swing.JPanel;//JPanel, JFrame을 찾아봐야할듯
 import javax.swing.Timer;//이게 시간에 따라 게임이 움직이게 하는건가
+import java.lang.StringBuffer;
+
 
 public class Board extends JPanel implements ActionListener {
 	//JPanel과 상속, 액션리스너 인터페이스 적용. Snake클래스는 JFrame을 상속함.
@@ -52,7 +54,7 @@ public class Board extends JPanel implements ActionListener {
 	private void initBoard() {
 		
 		addKeyListener(new TAdapter());//키리스너는 위에서 임포트한것.
-		setBackground(Color.black);
+		setBackground(Color.gray);
 		setFocusable(true);//focusable이란?
 		
 		setPreferredSize(new Dimension(B_WIDTH,B_HEIGHT));
@@ -107,15 +109,28 @@ public class Board extends JPanel implements ActionListener {
 		}
 	}
 	private void gameOver(Graphics g) {//게임오버도 그래픽을 건드리는 메서드였음. 확실한건 아닌데 게임이란게 결국 그래픽을 만드는거니까 다 그래픽을 매개로 하는 메서드인건가?awt랑 swing도 다 이미지관련 api고. 공부해봐야함.
+		StringBuffer scr = new StringBuffer("Score : ");
+		int scrPnt = (dots-3)*10;
+		scr.append(scrPnt);
+		String scrPrn = new String(scr); 
+
 		String msg = "Game Over";
-		Font small = new Font("Helvetica", Font.BOLD, 14);
+		Font small = new Font("Helvetica", Font.BOLD, 20);
 		FontMetrics metr = getFontMetrics(small);//위에 import했던 것들.
-		
 		g.setColor(Color.white);//게임을 끝내는 메서드라기 보다는 게임이 끝났을때 게임오버를 띄우는 메서드인듯.
 		g.setFont(small);
-		g.drawString(msg, (B_WIDTH - metr.stringWidth(msg))/2, B_HEIGHT/2);
+		g.drawString(msg, (B_WIDTH - metr.stringWidth(msg))/2, B_HEIGHT/2-20);
+		g.drawString(scrPrn, (B_WIDTH - metr.stringWidth(scrPrn))/2, B_HEIGHT/2);
+		
+		
+		String msg2 = "Press Enter to restart";
+		Font small2 = new Font("Helvetica", Font.PLAIN, 10);
+		FontMetrics metr2 = getFontMetrics(small2);
+		g.setColor(Color.white);
+		g.setFont(small2);
+		g.drawString(msg2, (B_WIDTH - metr2.stringWidth(msg2))/2, B_HEIGHT/2+15);
 	}//말그래도 Str을 드로우하는건데, 보드넓이-Str넓이의 절반, 보드높이의 절반. 이건 왜 이렇게 했을까? 그냥 저정도가 보기 좋나? 구현해보고 확인해야할 부분.
-	
+	//@@@예상대로 그냥 적당한 높이, 위치에 구현한거임. 내가 추가로 재시작도 구현했음. 근데 똑같이 g에다가 setcolor,font하는건데 왜 되는지 모르겠음.
 	private void checkApple() {//이름은 체크애플이지만 실질적으로는 사과 먹었을때 실행되는 메서드.
 		if((x[0]==apple_x)&&(y[0]==apple_y)) {
 			dots++;//몸 길어짐
@@ -136,7 +151,7 @@ public class Board extends JPanel implements ActionListener {
 		}
 		if(upDirection) {
 			y[0] -= DOT_SIZE;
-		}//left가 -인건 알겠는데 왜 up이 -일까? 도저히 이해x.
+		}//left가 -인건 알겠는데 왜 up이 -일까? 도저히 이해x.@@이해완료
 		if(downDirection) {
 			y[0] += DOT_SIZE;
 		}
@@ -175,11 +190,10 @@ public class Board extends JPanel implements ActionListener {
 		apple_y =((r*DOT_SIZE));
 		
 		for(int a :x) {
-			if(apple_x ==a) {
-				for(int b:y) {
-					if(apple_y==b) {
+			for(int b:y) {
+				if((apple_x==a)&&(apple_y==b)) {
 						locateApple();
-					}
+					
 				}
 			}
 		}
@@ -222,6 +236,18 @@ public class Board extends JPanel implements ActionListener {
 				rightDirection = false;
 				leftDirection = false;
 			}
+			if((key==KeyEvent.VK_ENTER)&&(inGame==false)){
+				reGame();//게임 재시작 기능 추가, 항목이 길어져서 reGame메서드로 분리
+			}
 		}
+		
+	}
+	public void reGame() {
+		inGame = true;
+		initGame();
+		rightDirection = true;
+		leftDirection = false;
+		upDirection = false;
+		downDirection = false;
 	}
 }
