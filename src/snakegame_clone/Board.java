@@ -173,6 +173,16 @@ public class Board extends JPanel implements ActionListener {
 		//@@@확인해보니 사이즈는 픽셀수가 맞았음.
 		r = (int)(Math.random()*RAND_POS);//위에서 r은 int형임을 선언했으므로 또 선언하면 에러가 남.(같은 변수이름으로 2개의 인스턴스라서?)
 		apple_y =((r*DOT_SIZE));
+		
+		for(int a :x) {
+			if(apple_x ==a) {
+				for(int b:y) {
+					if(apple_y==b) {
+						locateApple();
+					}
+				}
+			}
+		}
 	}
 	
 	@Override//JPanel상속, ActionListener를 구현하고 있는데 어디에서 override하는건지 확인
