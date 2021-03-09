@@ -7,7 +7,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;//이거랑 밑에 스윙.이미지아이콘 차이는?
-import java.awt.Toolkit;
+import java.awt.Toolkit;//@@Toolkit.getDefaultToolkit().sync();에만 씀. 그래픽 싱크로를 맞추는 것.
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;//키 입력받고
@@ -51,14 +51,15 @@ public class Board extends JPanel implements ActionListener {
 		//Snake의 init에 board()가 있는데, private initBoard를 퍼블릭으로 변환인듯
 	}
 	
-	private void initBoard() {
+	private void initBoard() {//@@@@사실상 이 클래스 자체. 1.키입력 2.배경설정 3.포커스 4.셋사이즈(맵설정) 5.이미지로드 6.initGame.6번이 가장 중요한 메서드. 뒤에 따로 정의
 		
 		addKeyListener(new TAdapter());//키리스너는 위에서 임포트한것.
 		setBackground(Color.gray);
-		setFocusable(true);//focusable이란?
+		setFocusable(true);//focusable이란?@@@키 누른게 다른곳에 입력되지 않고 현재 자리에 입력되도록 하는 것.
 		
 		setPreferredSize(new Dimension(B_WIDTH,B_HEIGHT));
 		//디멘션은 두 int를 잡아서 2차원공간을 만드는것같음. int 변수 하나 더 추가해본결과 에러나는 걸로 보아 3차원은 따로 있는듯?
+		//@@@예상대로 2차원 만드는 메서이고, setSize도 있는데 이거는 레이아웃을 변경할때 컴포넌트 크기도 바꾼다고 함. 일단 이 정도로만 이해
 		loadImages();
 		initGame();//두개 다 에러뜸. 나중에 구현하는것 같은데 위에거는 아까 선언한 모든 이미지를 로드하는듯	
 	}
