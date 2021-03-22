@@ -25,7 +25,7 @@ public class Board extends JPanel implements ActionListener {
 	private final int DOT_SIZE = 10;
 	private final int ALL_DOTS = 900;//30*30해서 900인건 알겠는데 이 숫자 바꾸면 에러나나?@@@확인결과 
 	private final int RAND_POS = 29;//rand pos 둘중 하나도, 29의 의미도 모르겠음@@이건 나중에 코드치다가 깨달음
-	private final int DELAY = 140;//게임 속도의 딜레인가?@@딜레이, 즉 게임속도 조절이 맞았음
+	private final int DELAY = 100;//게임 속도의 딜레인가?@@딜레이, 즉 게임속도 조절이 맞았음
 	
 	private final int x[] = new int[ALL_DOTS];//@@뱀의 머리, 몸의 좌표들
 	private final int y[] = new int[ALL_DOTS];
